@@ -1,0 +1,64 @@
+import java.util.*;
+
+public class ass2 {
+
+    char id;
+    int deadline, profit;
+
+    public ass2(char id, int deadline, int profit) {
+        this.id = id;
+        this.deadline = deadline;
+        this.profit = profit;
+    }
+
+    public static void jobScheduler(ArrayList<ass2> arr, int t) {
+        int n = arr.size();
+        Collections.sort(arr, (a, b) -> b.profit - a.profit);
+
+        boolean[] result = new boolean[t];
+        ass2[] sequence = new ass2[t];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = Math.min(t - 1, arr.get(i).deadline - 1); j >= 0; j--) {
+                if (!result[j]) {
+                    result[j] = true;
+                    sequence[j] = arr.get(i);
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Job sequence for processors:");
+        for (int j = 0; j < sequence.length; j++) {
+            System.out.println("Processor " + (j + 1) + ": " + sequence[j].id);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter the number of jobs:");
+        int numJobs = sc.nextInt();
+
+        ArrayList<ass2> job = new ArrayList<>();
+
+        for (int i = 0; i < numJobs; i++) {
+            System.out.println("Enter details for Job " + (i + 1) + ":");
+            System.out.print("ID: ");
+            char id = sc.next().charAt(0);
+            System.out.print("Deadline: ");
+            int deadline = sc.nextInt();
+            System.out.print("Profit: ");
+            int profit = sc.nextInt();
+
+            job.add(new ass2(id, deadline, profit));
+        }
+
+        System.out.println("Enter the number of processors:");
+        int numProcessors = sc.nextInt();
+
+        jobScheduler(job, numProcessors);
+
+        sc.close();
+    }
+}

@@ -1,0 +1,44 @@
+import java.math.BigInteger;
+import java.util.*;
+
+public class k
+
+{
+   public static BigInteger squre( BigInteger x)
+     
+     {
+        if( x.toString().length() <= 10 )
+          return x.multiply(x);  
+     
+
+    int n = x.toString().length();
+    int half = n/2;
+
+    BigInteger a = x.divide(BigInteger.TEN.pow(half));
+    BigInteger b = x.mod(BigInteger.TEN.pow(half));
+
+    BigInteger ac = squre(a);
+    BigInteger bd = squre(b);
+    BigInteger apb = squre(a.add(b)).subtract(ac).subtract(bd);
+
+
+   BigInteger result = ac.multiply(BigInteger.TEN.pow(2*half)).add(apb.multiply(BigInteger.TEN.pow(half))).add(bd);
+   
+    return result;
+    
+ }
+
+
+public static void main( String [] args)
+{
+  System.out.println(" enter the number ");
+   Scanner sc = new Scanner(System.in);
+
+   BigInteger x = sc.nextBigInteger();
+
+    BigInteger result = squre(x);
+  
+   System.out.println( result);
+}
+
+}

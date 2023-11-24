@@ -1,0 +1,133 @@
+import java.util.*;
+
+public class ass5
+
+  
+
+{
+     static int N;
+   
+   public static boolean issafe(int x, int y , int sol[][])
+     {
+        return(x>=0 && x< N && y>=0 && y<N && sol[x][y] == -1);
+
+      }
+
+   public static void printk(int sol[][])
+    
+    {
+        for(int i =0; i< N ;i++)
+          {
+            for(int j =0;j<N;j++)
+               {
+                 System.out.print(sol[i][j] + " ") ;
+               }
+              System.out.println();
+          }
+     }
+
+    
+  public static boolean solve( int N )
+
+    {  
+             
+
+           
+        int sol[][] = new int[N][N];
+        
+         for(int i =0; i< N ;i++)
+          {
+            for(int j =0;j<N;j++)
+               {
+                  sol[i][j]= -1; 
+               }
+               
+          }
+      
+       int xval[]={2,1,-1,-2,-2,-1,1,2};
+       int yval[]={1,2,2,1,-1,-2,-2,-1};
+
+
+       sol[0][0]=0;
+     
+     if(!solvekt(0,0,1,sol,xval,yval))
+        {
+            System.out.println("solution is not exist");
+            return false;
+         
+        }  
+     else
+             
+        {
+           printk(sol);
+           return true;
+         }
+       
+    }
+
+     
+    public static boolean solvekt( int x,int y,int count,int sol[][],int xval[],int yval[])
+      
+         {   
+             int xnext,ynext;
+              
+               
+             if(count == N*N)
+                return true;
+
+             for( int k =0;k<N;k++)
+                 {
+                    xnext = x+xval[k];
+                    ynext = y+yval[k];
+
+                    if( issafe(xnext,ynext,sol))
+                      {
+                         sol[xnext][ynext] = count;
+                        
+                          if(solvekt(xnext,ynext,count+1,sol,xval,yval))
+                            return true;
+                  
+                          else
+                        
+                           sol[xnext][ynext] = -1;
+                       }
+                    
+                  }
+                  
+                 return false;
+
+
+
+                
+          }
+
+   public static void main( String[] args)
+     {   
+         System.out.println(" enter the N");
+           Scanner sc = new Scanner(System.in);
+           N = sc.nextInt(); 
+        solve( N ); 
+     }
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
